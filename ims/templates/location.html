@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  body {
+      background-color: #b4b2b2; /* Set background color for the overview page */
+  }
+  </style>
+  
+<div class="container">
+  <h1>Locations</h1>
+  <p>Add warehouse locations.</p>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addLocationModal">Add Location</button>
+
+  <!-- Add Location Modal -->
+  <div class="modal fade" id="addLocationModal" tabindex="-1" role="dialog" aria-labelledby="addLocationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addLocationModalLabel">Add Location</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="POST">
+          <div class="modal-body">
+            {{ form.csrf_token }}
+            <div class="form-group">
+              {{ form.locname.label }}
+              {{ form.locname(class="form-control", placeholder="Enter location name") }}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            {{ form.locsubmit(class="btn btn-primary") }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-hover mt-3">
+    <thead>
+      <tr>
+        <th>Location Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for d in details %}
+      <tr>
+        <td>{{ d.loc_name }}</td>
+        <td>
+          <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editLocationModal-{{ d.loc_id }}">Edit</button>
+          <form method="POST" action="{{ url_for('delete_location', location_id=d.loc_id) }}" style="display:inline;">
+            {{ form.csrf_token }}
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        </td>
+      </tr>
+
+      <!-- Edit Location Modal -->
+      <div class="modal fade" id="editLocationModal-{{ d.loc_id }}" tabindex="-1" role="dialog" aria-labelledby="editLocationModalLabel-{{ d.loc_id }}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editLocationModalLabel-{{ d.loc_id }}">Edit Location</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form method="POST" action="{{ url_for('edit_location', location_id=d.loc_id) }}">
+              <div class="modal-body">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                  {{ form.locname.label }}
+                  {{ form.locname(class="form-control", value=d.loc_name) }}
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

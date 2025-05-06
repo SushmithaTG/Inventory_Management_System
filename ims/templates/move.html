@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  body {
+      background-color: #b4b2b2; /* Set background color for the overview page */
+  }
+  </style>
+
+<div class="container">
+  <h1>Transfers</h1>
+  <p>Manage product movements: Buy, Sale, or Transfer between locations.</p>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#moveProductModal">Move Product</button>
+
+  <!-- Move Product Modal -->
+  <div class="modal fade" id="moveProductModal" tabindex="-1" role="dialog" aria-labelledby="moveProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="moveProductModalLabel">Move Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="POST">
+          <div class="modal-body">
+            {{ form.csrf_token }}
+
+            <div class="form-group">
+              <label for="movement_type">Movement Type</label>
+              <select name="movement_type" class="form-control" id="movement_type">
+                <option value="Buy">Buy</option>
+                <option value="Sale">Sale</option>
+                <option value="Transfer" selected>Transfer</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              {{ form.mprodname.label }}
+              {{ form.mprodname(class="form-control") }}
+            </div>
+
+            <div class="form-group" id="source-field">
+              {{ form.src.label }}
+              {{ form.src(class="form-control") }}
+            </div>
+
+            <div class="form-group" id="destination-field">
+              {{ form.destination.label }}
+              {{ form.destination(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+              {{ form.mprodqty.label }}
+              {{ form.mprodqty(class="form-control") }}
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            {{ form.movesubmit(class="btn btn-primary") }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table of Movements -->
+  <table class="table table-hover mt-3">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Timestamp</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Product</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for d in details %}
+      <tr>
+        <td>{{ d.mid }}</td>
+        <td>{{ d.ts }}</td>
+        <td>{{ d.frm }}</td>
+        <td>{{ d.to }}</td>
+        <td>{{ d.pname }}</td>
+        <td>{{ d.pqty }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <form method="POST" action="{{ url_for('clear_history') }}">
+    <button type="submit" class="btn btn-danger">Clear History</button>
+  </form>
+</div>
+{% endblock %}
+
+

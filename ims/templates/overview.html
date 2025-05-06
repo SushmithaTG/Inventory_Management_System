@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+  body {
+      background-color: #b4b2b2; /* Set background color for the overview page */
+  }
+  </style>
+
+<div class="container">
+  <h1>Inventory Overview</h1>
+  <p>Current stock levels at each location</p>
+  
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Location</th>
+        {% for product in products %}
+        <th>{{ product.prod_name }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for location in locations %}
+      <tr>
+        <td>{{ location.loc_name }}</td>
+        {% for product in products %}
+        <!-- Add the conditional class here -->
+        <td class="{% if stock_data[location.loc_name][product.prod_name] < 10 %}bg-warning{% endif %}">
+          {{ stock_data[location.loc_name][product.prod_name] }}
+        </td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <div class="alert alert-info mt-3">
+    <i class="fas fa-exclamation-triangle"></i> Items highlighted in yellow are low stock (less than 10 units)
+  </div>
+</div>
+{% endblock %}

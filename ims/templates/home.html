@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: rgb(197, 194, 194);
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            background: #444;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            background: #333;
+            color: #fff;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Inventory Management System</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('overview') }}">Overview</a></li>
+            <li><a href="{{ url_for('location') }}">Locations</a></li>
+            <li><a href="{{ url_for('product') }}">Products</a></li>
+            <li><a href="{{ url_for('move') }}">Movements</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section>
+            <h2>About Website</h2>
+            <p>Welcome to the Inventory Management System (IMS). Manage your inventory efficiently and effectively.</p>
+        </section>
+        <section>
+            <h2>Features</h2>
+            <ul>
+                <li>Add/View product</li>
+                <li>Add/View product locations</li>
+                <li>Add/Monitor inventory movements</li>
+                <li>Generate detailed reports of transaction</li>
+            </ul>
+        </section>
+        <section>
+            <h2>About Me</h2>
+            <ul>
+                <li>Email: sushmithathangavel04@gmail.com</li>
+                <li>Phone: +91 9345360740</li>
+                <li>GitHub: https://github.com/SushmithaTG</li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Sushmitha T (IMS).</p>
+    </footer>
+</body>
+</html>
